@@ -1,0 +1,41 @@
+Test cases for Password Hashing Application
+
+
+Precondition: User has downloaded the Password Hashing application and unpacked successfully
+Operating system: MacOS
+
+<Password Hashing Application Execution>
+
+TC1: Setting an accepted PORT(8088) variable for application initialization
+Given the Hashing Application is being initialized and a PORT environment variable defined
+When the port is set to 8088
+Then the application is launched and wait for http connections
+
+TC2: Setting an unacceptable PORT variable for application initialization
+Given the Hashing Application is being initialized and a PORT environment variable defined
+When the port is set to 7077
+Then the application fails to launch and does not wait for http connections
+
+<Password Hashing Application Specifications>
+
+Post to the /hash endpoint
+Requirements:
+1. A POST to /hash should accept a password
+2. It should return a job identifier immediately
+3. It should then wait 5 seconds and compute the password hash
+4. The hashing algorithm should be SHA512
+
+TC1: A POST to /hash should accept a password
+Given
+When
+Then
+
+TC: A GET to /hash should accept a job identifier
+Given 
+When 
+Then
+
+TC: A GET to /stats should accept no data
+Given 
+When 
+Then
