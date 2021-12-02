@@ -15,11 +15,12 @@ Given the Hashing Application is being initialized and a PORT environment variab
 When the port is set to 7077
 Then the application should fail to launch
 
+
 <Password Hashing Application Specifications>
 Precondition: The application has launched successfuly
 Operating system: MacOS
 
-POST to the /hash endpoint
+POST to /hash endpoint
 Requirements:
 1. A POST to /hash should accept a password
 2. It should return a job identifier immediately
@@ -46,36 +47,49 @@ Given the /hash endpoint includes an empty parameter
 When sending a POST request
 Then the request should fail and return an error
 
-GET to the /hash endpoint
+GET to /hash endpoint
 Requirements:
 1. A GET to /hash should accept a job identifier
 2. It should return the base64 encoded password hash for the corresponding POST request
 
-TC: A GET to /hash should accept a job identifier
-Given
-When
-Then
+TC: A GET to /hash should accept a job identifier (corresponding POST request sent)
+Given the /hash endpoint includes a valid job identifier
+When sending a GET request
+Then the base64 encoded password hash should be returned
 
-TC: A GET to /hash should not accept an invalid job identifier
-Given
-When
-Then
+TC: A GET to /hash should not accept an invalid job identifier (valid value/syntax, but no corresponding POST request)
+Given the /hash endpoint includes an invalid job identifier
+When sending a GET request
+Then the request should fail and return an error
+
+TC: A GET to /hash should not accept an invalid job identifier (invalid value/syntax)
+Given the /hash endpoint includes an invalid job identifier
+When sending a GET request
+Then the request should fail and return an error
 
 TC: A GET to /hash should not accept an empty job identifier
-Given
-When
-Then
+Given the /hash endpoint includes an invalid job identifier
+When sending a GET request
+Then the request should fail and return an error
 
 TC: A GET to /hash should should return the base64 encoded password hash for the corresponding POST request
-Given
-When
-Then
+Given the /hash endpoint includes a valid job identifier
+When sending a GET request
+Then the base64 encoded password hash should be accurately returned
+
+GET to /stats
+1. It should accept no data
+2. It should return a JSON data structure for the total hash requests since the server started and the average time of a hash request in milliseconds
 
 
 
 
 
 
-#Assumptions and considerations
-When hitting the Post to the /hash endpoint, what is considered "immediately"
-Consider stress/limit testing 
+
+#Notes:
+-For MacOS: Install Homebrew if having issues unpacking/launching the application
+
+#Considerations:
+-Stress/performance testing the endpoints
+-Exploratory testing for valid passwords including special characters and password length limits
