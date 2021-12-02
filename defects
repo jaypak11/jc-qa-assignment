@@ -38,9 +38,9 @@ Expected: A GET to /stats request with data/parameters should fail and return an
 Defect #6
 Description: The Hashing Application software does not process multiple connections simultaneously
 Severity: Critical/High
-Analysis: Sent multiple valid GET to /hash requests by using "&&" between each request in order to send multiple POST /hash requests concurrently.  What was observed was that each request was completing one at a time as if there was a queue.
-Actual: Multiple valid GET to /hash requests that are sent concurrently appear to process one at a time
-Expected: Multiple valid GET to /hash requests that are sent concurrently should process concurrently
+Analysis: Sent multiple valid POST to /hash requests concurrently.  What was observed was that each request was completing one at a time as if there was a queue.
+Actual: Multiple valid POST to /hash requests that are sent concurrently appear to process one at a time
+Expected: Multiple valid POST to /hash requests that are sent concurrently should process concurrently
 
 Defect #7
 Description: A POST to /hash should not accept an empty parameter
