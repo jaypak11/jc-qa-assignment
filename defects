@@ -25,7 +25,7 @@ Defect #4
 Description: GET to /stats endpoints metric for average time of a hash request in milliseconds value is not returning accurate data
 Severity: High
 Analysis: Sent one valid POST request for the /hash endpoint, then sent a GET to /stats endpoint and returned an "AverageTime":1954218 milliseconds which converted to seconds, then minutes is ~32.57 minutes
-Actual: 
+Actual: GET to /stats endpoints metric for average time of a hash request in milliseconds value returned an "AverageTime":1954218 for one successful POST /hash request which is ~1954.218 seconds
 Expected: GET to /stats endpoints metric for average time of a hash request in milliseconds value should return accurate data
 
 Defect #5
