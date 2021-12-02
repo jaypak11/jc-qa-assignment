@@ -1,41 +1,81 @@
 Test cases for Password Hashing Application
 
 
+<Password Hashing Application Execution>
 Precondition: User has downloaded the Password Hashing application and unpacked successfully
 Operating system: MacOS
 
-<Password Hashing Application Execution>
-
-TC1: Setting an accepted PORT(8088) variable for application initialization
+TC: Setting a valid PORT(8088) variable for application initialization
 Given the Hashing Application is being initialized and a PORT environment variable defined
 When the port is set to 8088
-Then the application is launched and wait for http connections
+Then the application should launch and wait for http connections
 
-TC2: Setting an unacceptable PORT variable for application initialization
+TC: Setting an invalid PORT variable for application initialization
 Given the Hashing Application is being initialized and a PORT environment variable defined
 When the port is set to 7077
-Then the application fails to launch and does not wait for http connections
+Then the application should fail to launch
 
 <Password Hashing Application Specifications>
+Precondition: The application has launched successfuly
+Operating system: MacOS
 
-Post to the /hash endpoint
+POST to the /hash endpoint
 Requirements:
 1. A POST to /hash should accept a password
 2. It should return a job identifier immediately
 3. It should then wait 5 seconds and compute the password hash
 4. The hashing algorithm should be SHA512
 
-TC1: A POST to /hash should accept a password
+TC: A POST to /hash should accept a password
+Given the /hash endpoint includes a password parameter {"password":"x"}, where x=password
+When sending a POST request
+Then a job identifier should return immediately
+
+TC: A POST to /hash should not accept an empty password
+Given the /hash endpoint includes a password parameter {"password":""}
+When sending a POST request
+Then the request should fail and return an error
+
+TC: A POST to /hash should not accept a non-password parameter
+Given the /hash endpoint includes a non-password parameter, for example {"id":"x"}, where x=id
+When sending a POST request
+Then the request should fail and return an error
+
+TC: A POST to /hash should not accept an empty parameter
+Given the /hash endpoint includes an empty parameter
+When sending a POST request
+Then the request should fail and return an error
+
+GET to the /hash endpoint
+Requirements:
+1. A GET to /hash should accept a job identifier
+2. It should return the base64 encoded password hash for the corresponding POST request
+
+TC: A GET to /hash should accept a job identifier
 Given
 When
 Then
 
-TC: A GET to /hash should accept a job identifier
-Given 
-When 
+TC: A GET to /hash should not accept an invalid job identifier
+Given
+When
 Then
 
-TC: A GET to /stats should accept no data
-Given 
-When 
+TC: A GET to /hash should not accept an empty job identifier
+Given
+When
 Then
+
+TC: A GET to /hash should should return the base64 encoded password hash for the corresponding POST request
+Given
+When
+Then
+
+
+
+
+
+
+#Assumptions and considerations
+When hitting the Post to the /hash endpoint, what is considered "immediately"
+Consider stress/limit testing 
