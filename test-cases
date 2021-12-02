@@ -12,7 +12,7 @@ Then the application should launch and wait for http connections
 
 TC: Setting an invalid PORT variable for application initialization
 Given the Hashing Application is being initialized and a PORT environment variable defined
-When the port is set to 7077
+When the port is set to 7077 (assuming any PORT other than the provided 8088)
 Then the application should fail to launch
 
 
