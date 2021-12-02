@@ -17,7 +17,7 @@ Then the application should fail to launch
 
 
 <Password Hashing Application Specifications>
-Precondition: The application has launched successfuly
+Precondition: The application has launched successfully
 Operating system: MacOS
 
 POST to /hash endpoint
@@ -48,6 +48,7 @@ When sending a POST request
 Then the request should fail and return an error
 
 GET to /hash endpoint
+Precondition: The application has launched successfully and POST to /hash endpoint requests sent to hash passwords
 Requirements:
 1. A GET to /hash should accept a job identifier
 2. It should return the base64 encoded password hash for the corresponding POST request
@@ -57,33 +58,83 @@ Given the /hash endpoint includes a valid job identifier
 When sending a GET request
 Then the base64 encoded password hash should be returned
 
-TC: A GET to /hash should not accept an invalid job identifier (valid value/syntax, but no corresponding POST request)
+TC: A GET to /hash should not accept an invalid job identifier (valid value, but no corresponding POST request)
 Given the /hash endpoint includes an invalid job identifier
 When sending a GET request
 Then the request should fail and return an error
 
-TC: A GET to /hash should not accept an invalid job identifier (invalid value/syntax)
+TC: A GET to /hash should not accept an invalid job identifier (invalid value)
 Given the /hash endpoint includes an invalid job identifier
 When sending a GET request
 Then the request should fail and return an error
 
 TC: A GET to /hash should not accept an empty job identifier
-Given the /hash endpoint includes an invalid job identifier
+Given the /hash endpoint includes an empty job identifier
 When sending a GET request
 Then the request should fail and return an error
 
-TC: A GET to /hash should should return the base64 encoded password hash for the corresponding POST request
+TC: A GET to /hash should should return the base64 encoded password hash for the corresponding POST request (corresponding POST request sent)
 Given the /hash endpoint includes a valid job identifier
 When sending a GET request
 Then the base64 encoded password hash should be accurately returned
 
 GET to /stats
+Requirements:
 1. It should accept no data
 2. It should return a JSON data structure for the total hash requests since the server started and the average time of a hash request in milliseconds
 
+TC: A GET to /stats should return a JSON data structure for the total hash requests since the server started and the average time of a hash request in milliseconds
+Given the /stats endpoint does not include any additional data/parameters
+When sending a GET request
+Then the request should return a JSON data structure for the total hash requests since the server started and the average time of a hash request in milliseconds
+
+TC: A GET to /stats should return a JSON data structure for the total hash requests since the server started and the average time of a hash request in milliseconds
+Given the /stats endpoint does not include any additional data/parameters
+When sending a GET request
+Then the request should return a JSON data structure for the total hash requests since the server started and the average time of a hash request in milliseconds accurately
+
+TC: A GET to /stats should accept no data/parameters
+Given the /stats endpoint includes additional data/parameters, for example -d '{"password":"x"}', where x=password
+When sending a GET request
+Then the request should fail and return an error
 
 
+<Password Hashing Application Additional Specifications>
+Requirements:
+1. The software should be able to process multiple connections simultaneously.
+2. The software should support a graceful shutdown request - it should allow any in-flight password hashing to complete, reject any new requests, respond with a 200 and shutdown
+Precondition: The application has launched successfully
+Operating system: MacOS
 
+TC: The software should be able to process multiple connections simultaneously for POST to /hash requests
+Given the application has launched successfully
+When multiple valid POST to /hash requests are sent concurrently
+Then a job identifier should return immediately for each request concurrently
+
+TC: The software should be able to process multiple connections simultaneously for GET to /hash requests
+Given the application has launched successfully
+When multiple valid GET to /hash requests are sent concurrently
+Then the base64 encoded password hash should be returned for each request concurrently
+
+TC: The software should be able to process multiple connections simultaneously for GET to /stats requests
+Given the application has launched successfully
+When multiple valid GET to /stats requests are sent concurrently
+Then a JSON data structure for the total hash requests since the server started and the average time of a hash request in milliseconds should be returned for each request concurrently
+
+TC: The software should support a graceful shutdown request for in-flight password hashing requests
+Given a POST shutdown request is in progress for an active session
+When there are in-flight password hashing requests in progress
+Then the in-flight password hashing requests in progress should complete before shutting down and respond with a 200
+
+TC: The software should support a shutdown request successfully
+Given a POST shutdown request is in progress for an active session
+When the shutdown request responds with a 200
+Then the software should no longer wait or accept http connections
+
+TC: No additional password requests should be allowed when shutdown is pending
+Given a POST shutdown request is in progress for an active session
+When POST to /hash endpoint requests are sent and not in-flight
+Then the password requests should be rejected before shutting down and respond with a 200
 
 
 
@@ -91,5 +142,5 @@ GET to /stats
 -For MacOS: Install Homebrew if having issues unpacking/launching the application
 
 #Considerations:
--Stress/performance testing the endpoints
--Exploratory testing for valid passwords including special characters and password length limits
+-Stress/performance testing the endpoints for degradation
+-Exploratory testing for passwords including special characters and password length limits
