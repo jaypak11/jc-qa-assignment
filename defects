@@ -1,0 +1,57 @@
+<Defects discovered in Password Hashing Application under test>
+
+Defect #1
+Description: Hashing algorithm in application does not return the base64 encoded password correctly
+Severity: Critical
+Analysis: After encoding the string password via SHA512 for "angrymonkey" string, then encoding the hash to Base64 in the example given using online encoding tools, the expected hash values did not match up. This was also vetted against other password strings and results compared against the software hashing mechanism and online encoding tools. 
+Actual: MzRkZDBmMDBhYjYyNzlhY2EyNGQ4ZjNmNDFkZTc3MDFlMzMzMWU0NmVmNjQzNzcwNjE4ODgzOWYwYjQzNzZmZmM1MjE2YmRjY2I1YjBhMDliZWVhOGJiMzZlZjEwZjAyNzdmMzJhOGQwN2IyMDg4ZDI5NThhMGM2YTdiZTAwZDY=
+Expected: zHkbvZDdwYYiDnwtDdv/FIWvcy1sKCb7qi7Nu8Q8Cd/MqjQeyCI0pWKDGp74A1g==
+
+Defect #2
+Description:
+Severity:
+Analysis:
+Actual:
+Expected: 
+
+Defect #3
+Description:
+Severity:
+Analysis:
+Actual:
+Expected: 
+
+Defect #4
+Description:
+Severity:
+Analysis:
+Actual:
+Expected: 
+
+Defect #5
+Description:
+Severity:
+Analysis:
+Actual:
+Expected: 
+
+Defect #6
+Description:
+Severity:
+Analysis:
+Actual:
+Expected: 
+
+Defect #7
+Description:
+Severity:
+Analysis:
+Actual:
+Expected: 
+
+Defect #8
+Description:
+Severity:
+Analysis:
+Actual:
+Expected: 
