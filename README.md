@@ -33,7 +33,6 @@ Jay Pak's submission for JumpCloud's QA assignment. In this repository you'll fi
 
 Jay Pak - jaypak11@gmail.com
 
-Project Link: [https://github.com/jaypak11/jc-qa-assignment](https://github.com/github_username/repo_name)
 
 
 
