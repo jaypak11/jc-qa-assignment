@@ -137,7 +137,6 @@ When POST to /hash endpoint requests are sent and not in-flight
 Then the password requests should be rejected before shutting down and respond with a 200
 
 
-
 #Notes:
 -For MacOS: Install Homebrew if having issues unpacking/launching the application
 
